@@ -1,0 +1,6 @@
+# dependencies
+/vendor
+
+# live reload utility for Go web servers
+# $ gin -a 3002 -p 3001 r server/app.go
+gin-bin

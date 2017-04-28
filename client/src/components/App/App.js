@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
+import api from './Api.json';
 import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    console.log(api)
+  }
+
   render() {
     return (
       <div className="App">
