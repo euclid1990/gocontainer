@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ClearFix from 'material-ui/internal/ClearFix';
 import spacing from 'material-ui/styles/spacing';
-import withWidth, {SMALL, LARGE} from 'material-ui/utils/withWidth';
+import withWidth, {SMALL, MEDIUM, LARGE} from 'material-ui/utils/withWidth';
 
 const desktopGutter = spacing.desktopGutter, desktopGutterLess = spacing.desktopGutterLess;
 
@@ -43,7 +43,7 @@ class Section extends Component {
           styles.root,
           style,
           width === SMALL && styles.rootWhenSmall,
-          width === LARGE && styles.rootWhenLarge)}
+          (width === LARGE || width === MEDIUM) && styles.rootWhenLarge)}
       >
         {content}
       </ClearFix>

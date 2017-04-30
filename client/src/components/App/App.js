@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import withWidth, { LARGE } from 'material-ui/utils/withWidth';
 import { Header, Sidebar, Section, Footer } from '../Share';
+import Routes from './Routes';
 import api from './Api.json';
 import './App.css';
 
@@ -67,26 +69,29 @@ class App extends Component {
     }
 
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
-        {/* Create new Obj to prevent Warning: div was passed a style object that has previously been mutated. */}
-        <div className="app" style={Object.assign({}, muiTheme.root)}>
-          <Header
-            style={muiTheme.appBar}
-            onTouchLeftHeaderIconButton={this.handleTouchLeftHeaderIconButton}
-          />
-          <Sidebar
-            style={muiTheme.navDrawer}
-            docked={docked}
-            onRequestChangeSidebar={this.handleChangeRequestSidebar}
-            open={sidebarOpen}
-          />
-          <Section>
-            <div className="content" style={Object.assign({}, muiTheme.content)}>
-            </div>
-            <Footer style={muiTheme.footer} />
-          </Section>
-        </div>
-      </MuiThemeProvider>
+      <Router>
+        <MuiThemeProvider muiTheme={muiTheme}>
+          {/* Create new Obj to prevent Warning: div was passed a style object that has previously been mutated. */}
+          <div className="app" style={Object.assign({}, muiTheme.root)}>
+            <Header
+              style={muiTheme.appBar}
+              onTouchLeftHeaderIconButton={this.handleTouchLeftHeaderIconButton}
+            />
+            <Sidebar
+              style={muiTheme.navDrawer}
+              docked={docked}
+              onRequestChangeSidebar={this.handleChangeRequestSidebar}
+              open={sidebarOpen}
+            />
+            <Section>
+              <div className="content" style={Object.assign({}, muiTheme.content)}>
+                <Routes />
+              </div>
+              <Footer style={muiTheme.footer} />
+            </Section>
+          </div>
+        </MuiThemeProvider>
+      </Router>
     );
   }
 }

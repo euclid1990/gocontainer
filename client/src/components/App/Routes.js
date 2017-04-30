@@ -1,26 +1,33 @@
-import React from 'react'
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom'
+import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
+import { About, Home } from '../index';
 
-// Each logical "route" has two components, one for
-// the sidebar and one for the main area. We want to
-// render both of them in different places when the
-// path matches the current URL.
 const routes = [
   { path: '/',
     exact: true,
-    sidebar: () => <div>home!</div>,
-    main: () => <h2>Home</h2>
+    component: Home,
   },
-  { path: '/bubblegum',
-    sidebar: () => <div>bubblegum!</div>,
-    main: () => <h2>Bubblegum</h2>
-  },
-  { path: '/shoelaces',
-    sidebar: () => <div>shoelaces!</div>,
-    main: () => <h2>Shoelaces</h2>
+  { path: '/about',
+    component: About,
   }
-]
+];
+
+class Routes extends Component {
+
+  render() {
+    return (
+      <div>
+        {routes.map((route, index) => (
+          <Route
+            key={index}
+            path={route.path}
+            exact={route.exact}
+            component={route.component}
+          />
+        ))}
+      </div>
+    );
+  }
+}
+
+export default Routes;
