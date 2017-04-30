@@ -5,6 +5,9 @@
 /src/**/*.css
 /src/components/App/Api.json
 
+# bowers
+/public/bowers
+
 # dependencies
 /node_modules
 
