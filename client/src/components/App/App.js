@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import withWidth, { LARGE } from 'material-ui/utils/withWidth';
+import withWidth, { LARGE, MEDIUM, SMALL } from 'material-ui/utils/withWidth';
 import { Header, Sidebar, Section, Footer } from '../Share';
 import Routes from './Routes';
 import api from './Api.json';
@@ -34,38 +34,61 @@ class App extends Component {
   constructor(props) {
     super(props);
     console.log(api)
+    this.prevWidth = null
     this.state = {
       sidebarOpen: false,
+      docked: false,
     };
   }
 
   handleTouchLeftHeaderIconButton = () => {
     this.setState({
       sidebarOpen: !this.state.sidebarOpen,
+      docked: this.props.width === LARGE,
     });
+    this.handleChangeWidth(!this.state.sidebarOpen, this.props.width);
   };
 
   handleChangeRequestSidebar = (open) => {
     this.setState({
       sidebarOpen: open,
+      docked: this.props.width === LARGE,
     });
+    this.handleChangeWidth(open, this.props.width);
   };
+
+  handleChangeWidth = (open, screen) => {
+    switch(open) {
+      case true:
+        if (screen === LARGE) {
+          muiTheme.content.paddingLeft = muiTheme.footer.paddingLeft = sidebarWidth;
+          muiTheme.root.paddingBottom = muiTheme.footer.height = footerDesktopHeight;
+        } else {
+          muiTheme.content.paddingLeft = 0;
+          muiTheme.footer.paddingLeft = null;
+          muiTheme.root.paddingBottom = muiTheme.footer.height = footerMobileHeight;
+        }
+        break;
+      default:
+          muiTheme.content.paddingLeft = 0;
+          muiTheme.footer.paddingLeft = null;
+    }
+  }
 
   render() {
     let {
       sidebarOpen,
+      docked,
     } = this.state;
-    let docked = false;
 
-    if (this.props.width === LARGE) {
+    if (this.props.width === LARGE && this.prevWidth !== LARGE) {
       docked = true;
       sidebarOpen = true;
-      muiTheme.content.paddingLeft = muiTheme.footer.paddingLeft = sidebarWidth;
-      muiTheme.root.paddingBottom = muiTheme.footer.height = footerDesktopHeight;
-    } else {
-      muiTheme.content.paddingLeft = 0;
-      muiTheme.footer.paddingLeft = null;
-      muiTheme.root.paddingBottom = muiTheme.footer.height = footerMobileHeight;
+      this.prevWidth = LARGE;
+      this.handleChangeWidth(sidebarOpen, LARGE);
+    } else if ((this.props.width === MEDIUM || this.props.width === SMALL) && this.prevWidth !== MEDIUM) {
+      this.handleChangeWidth(sidebarOpen, MEDIUM);
+      this.prevWidth = MEDIUM;
     }
 
     return (
