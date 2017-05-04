@@ -1,0 +1,52 @@
+[
+ {
+  "container_id": "ee877f0dd30e",
+  "container_name": "nifty_thompson",
+  "cpu_perc": "0.00%",
+  "mem_usage": "0B / 0B",
+  "mem_perc": "0.00%",
+  "net_io": "0B / 0B",
+  "block_io": "0B / 0B",
+  "pids": "0"
+ },
+ {
+  "container_id": "eaa47436350e",
+  "container_name": "nutrition_application_1",
+  "cpu_perc": "0.00%",
+  "mem_usage": "0B / 0B",
+  "mem_perc": "0.00%",
+  "net_io": "0B / 0B",
+  "block_io": "0B / 0B",
+  "pids": "0"
+ },
+ {
+  "container_id": "3c49c176322e",
+  "container_name": "optimistic_austin",
+  "cpu_perc": "0.00%",
+  "mem_usage": "0B / 0B",
+  "mem_perc": "0.00%",
+  "net_io": "0B / 0B",
+  "block_io": "0B / 0B",
+  "pids": "0"
+ },
+ {
+  "container_id": "a4e4eb158264",
+  "container_name": "Project",
+  "cpu_perc": "0.00%",
+  "mem_usage": "828KiB / 1.952GiB",
+  "mem_perc": "0.04%",
+  "net_io": "6.72kB / 1.21kB",
+  "block_io": "0B / 0B",
+  "pids": "1"
+ },
+ {
+  "container_id": "44a3afb25918",
+  "container_name": "mystifying_aryabhata",
+  "cpu_perc": "0.00%",
+  "mem_usage": "0B / 0B",
+  "mem_perc": "0.00%",
+  "net_io": "0B / 0B",
+  "block_io": "0B / 0B",
+  "pids": "0"
+ }
+]

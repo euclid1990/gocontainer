@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import { About, Home, Docker, DockerStats } from '../index';
+import { About, Home, Docker } from '../index';
+import { DockerStats } from '../../containers';
 
 const routes = [
   { path: '/',
