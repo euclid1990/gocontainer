@@ -1,6 +1,7 @@
 package config
 
 import (
+	"../controllers"
 	"../socket"
 	"encoding/json"
 	"github.com/gorilla/mux"
@@ -41,17 +42,25 @@ var (
 			"/",
 			Index,
 		},
+		// Docker Router
+		Route{
+			"docker.stats",
+			"GET",
+			"/dockers/stats",
+			controllers.DockerStats,
+		},
+		// Container Router
 		Route{
 			"container.index",
 			"GET",
 			"/containers",
-			ContainerIndex,
+			controllers.ContainerIndex,
 		},
 		Route{
 			"container.show",
 			"GET",
 			"/containers/{container_id}",
-			ContainerShow,
+			controllers.ContainerShow,
 		},
 	}
 	prefixs = Prefixs{
@@ -141,28 +150,4 @@ func writeApiFile(content []byte) {
 func Index(w http.ResponseWriter, r *http.Request) {
 	log.Println(r.URL.Path[:])
 	http.ServeFile(w, r, "./../client/build/")
-}
-
-func ContainerIndex(w http.ResponseWriter, r *http.Request) {
-	containers := []map[string]string{{"id": "example"}}
-	js, err := json.Marshal(containers)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(js)
-}
-
-func ContainerShow(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
-	containerId := params["container_id"]
-	containers := map[string]string{"id": containerId}
-	js, err := json.Marshal(containers)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(js)
 }
