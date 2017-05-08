@@ -2,18 +2,24 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import { getDockerStatsActionCreater } from '../../actions';
+import { Circular } from '../../components/Share';
 
 class DockerStatsComponent extends Component {
 
   componentWillMount() {
-    this.props.initialize();
+    this.props.initialize("");
   }
 
   render() {
-    let dockerStats = this.props.dockerStats;
+    let {
+      items,
+      isFetching,
+    } = this.props;
     return (
       <div>
         <p>List of container(s) resource usage statistics.</p>
+        <Circular hide={isFetching && items.length === 0}/>
+        {items.length ?
         <Table>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
@@ -28,20 +34,21 @@ class DockerStatsComponent extends Component {
           </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
-            {dockerStats.map((stats, i) => (
+            {items.map((item, i) => (
               <TableRow key={i}>
-                <TableRowColumn>{stats.container_id}</TableRowColumn>
-                <TableRowColumn>{stats.container_name}</TableRowColumn>
-                <TableRowColumn>{stats.cpu_perc}</TableRowColumn>
-                <TableRowColumn>{stats.net_io}</TableRowColumn>
-                <TableRowColumn>{stats.block_io}</TableRowColumn>
-                <TableRowColumn>{stats.mem_perc}</TableRowColumn>
-                <TableRowColumn>{stats.mem_usage}</TableRowColumn>
-                <TableRowColumn>{stats.pids}</TableRowColumn>
+                <TableRowColumn>{item.container_id}</TableRowColumn>
+                <TableRowColumn>{item.container_name}</TableRowColumn>
+                <TableRowColumn>{item.cpu_perc}</TableRowColumn>
+                <TableRowColumn>{item.net_io}</TableRowColumn>
+                <TableRowColumn>{item.block_io}</TableRowColumn>
+                <TableRowColumn>{item.mem_perc}</TableRowColumn>
+                <TableRowColumn>{item.mem_usage}</TableRowColumn>
+                <TableRowColumn>{item.pids}</TableRowColumn>
               </TableRow>
             ))}
           </TableBody>
         </Table>
+        : null}
       </div>
     );
   }
@@ -49,14 +56,15 @@ class DockerStatsComponent extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    dockerStats: state.dockerStats,
+    items: state.dockerStats.items,
+    isFetching: state.dockerStats.isFetching,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    initialize: () => {
-      dispatch(getDockerStatsActionCreater())
+    initialize: (filter) => {
+      dispatch(getDockerStatsActionCreater(filter))
     }
   }
 }

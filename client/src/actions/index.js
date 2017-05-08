@@ -1,15 +1,22 @@
 import * as dockerApi from '../api/dockers';
-import { DOCKER_STATS_GET } from '../constants/DockerActionTypes';
+import { DOCKER_STATS_GET, DOCKER_STATS_GET_COMPLETE } from '../constants/DockerActionTypes';
 
-export const getDockerStats = (dockerStats) => ({
+const getDockerStats = (filter) => ({
   'type': DOCKER_STATS_GET,
-  dockerStats
+  filter,
 });
 
-export const getDockerStatsActionCreater = () => {
+export const getDockerStatsComplete = (filter, dockerStats) => ({
+  'type': DOCKER_STATS_GET_COMPLETE,
+  filter,
+  dockerStats,
+});
+
+export const getDockerStatsActionCreater = (filter) => {
   return (dispatch) => {
-    return dockerApi.getDockerStats((ds) => {
-      dispatch(getDockerStats(ds));
+    dispatch(getDockerStats(filter))
+    return dockerApi.getDockerStats(filter, (ds) => {
+      dispatch(getDockerStatsComplete(filter, ds));
     });
   };
 }

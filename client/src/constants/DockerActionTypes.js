@@ -1,3 +1,4 @@
 export const DOCKER_STATS_GET = 'docker_stats_get';
-export const DOCKER_STATS_SHOW_ALL = 'docker_stats_show_all';
-export const DOCKER_STATS_SHOW_ACTIVE = 'docker_stats_show_active';
+export const DOCKER_STATS_GET_COMPLETE = 'docker_stats_get_complete';
+export const DOCKER_STATS_FILTER_ALL = 'docker_stats_filter_all';
+export const DOCKER_STATS_FILTER_RUNNING = 'docker_stats_filter_running';
