@@ -3,7 +3,7 @@
 # ignore builded css files
 /src/*.css
 /src/**/*.css
-/src/components/App/Api.json
+/src/api/endpoint.json
 
 # bowers
 /public/bowers

@@ -5,13 +5,12 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import withWidth, { LARGE, MEDIUM, SMALL } from 'material-ui/utils/withWidth';
 import { Header, Sidebar, Section, Footer } from '../Share';
 import Routes from './Routes';
-import api from './Api.json';
 import './App.css';
 
 const appBarHeight = 50;
 const sidebarWidth = 256;
-const footerDesktopHeight = 125;
-const footerMobileHeight = 135;
+const footerDesktopHeight = 140;
+const footerMobileHeight = 150;
 const muiTheme = getMuiTheme({
   root: {
     // For fixed footer
@@ -33,7 +32,6 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    console.log(api)
     this.prevWidth = null
     this.state = {
       sidebarOpen: false,
@@ -62,16 +60,20 @@ class App extends Component {
       case true:
         if (screen === LARGE) {
           muiTheme.content.paddingLeft = muiTheme.footer.paddingLeft = sidebarWidth;
-          muiTheme.root.paddingBottom = muiTheme.footer.height = footerDesktopHeight;
+          muiTheme.root.paddingBottom = footerDesktopHeight;
+          muiTheme.footer.height = footerDesktopHeight - 16;
         } else {
           muiTheme.content.paddingLeft = 0;
           muiTheme.footer.paddingLeft = null;
-          muiTheme.root.paddingBottom = muiTheme.footer.height = footerMobileHeight;
+          muiTheme.root.paddingBottom = footerMobileHeight;
+          muiTheme.footer.height = footerMobileHeight - 16;
         }
         break;
       default:
           muiTheme.content.paddingLeft = 0;
           muiTheme.footer.paddingLeft = null;
+          muiTheme.root.paddingBottom = footerMobileHeight;
+          muiTheme.footer.height = footerMobileHeight - 16;
     }
   }
 
@@ -88,6 +90,8 @@ class App extends Component {
       this.handleChangeWidth(sidebarOpen, LARGE);
     } else if ((this.props.width === MEDIUM || this.props.width === SMALL) && this.prevWidth !== MEDIUM) {
       this.handleChangeWidth(sidebarOpen, MEDIUM);
+      console.log(this.props.width)
+      console.log(MEDIUM)
       this.prevWidth = MEDIUM;
     }
 

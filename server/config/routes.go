@@ -46,20 +46,20 @@ var (
 		Route{
 			"docker.stats",
 			"GET",
-			"/dockers/stats",
+			"/api/dockers/stats",
 			controllers.DockerStats,
 		},
 		// Container Router
 		Route{
 			"container.index",
 			"GET",
-			"/containers",
+			"/api/containers",
 			controllers.ContainerIndex,
 		},
 		Route{
 			"container.show",
 			"GET",
-			"/containers/{container_id}",
+			"/api/containers/{container_id}",
 			controllers.ContainerShow,
 		},
 	}
@@ -134,7 +134,7 @@ func ListingRoutes(r *mux.Router) {
 
 func writeApiFile(content []byte) {
 	_, filename, _, _ := runtime.Caller(1)
-	apiFilePath = path.Dir(filename) + "/./../../client/src/components/App/Api.json"
+	apiFilePath = path.Dir(filename) + "/./../../client/src/api/endpoint.json"
 	if _, err := os.Stat(apiFilePath); err == nil {
 		return
 	}
