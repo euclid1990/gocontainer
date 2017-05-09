@@ -1,23 +1,36 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
-import { getDockerStatsActionCreater } from '../../actions';
+import { DOCKER_STATS_FILTER_ALL, DOCKER_STATS_FILTER_RUNNING } from '../../constants/DockerActionTypes';
+import { filterContainer, getDockerStatsActionCreator } from '../../actions';
 import { Circular } from '../../components/Share';
 
 class DockerStatsComponent extends Component {
 
   componentWillMount() {
-    this.props.initialize("");
+    this.props.initialize();
   }
 
   render() {
     let {
+      filter,
+      selectFilter,
       items,
       isFetching,
     } = this.props;
     return (
       <div>
         <p>List of container(s) resource usage statistics.</p>
+        <DropDownMenu
+          value={filter}
+          onChange={selectFilter}
+          style={{width: 200}}
+          autoWidth={false}>
+          <MenuItem value={DOCKER_STATS_FILTER_ALL} primaryText="All containers" />
+          <MenuItem value={DOCKER_STATS_FILTER_RUNNING} primaryText="Running containers" />
+        </DropDownMenu>
         <Circular hide={isFetching && items.length === 0}/>
         {items.length ?
         <Table>
@@ -55,17 +68,27 @@ class DockerStatsComponent extends Component {
 }
 
 const mapStateToProps = (state) => {
+  let dockerStatsFilter = state.dockerStats.dockerStatsFilter,
+      dockerStatsList = state.dockerStats.dockerStatsList;
   return {
-    items: state.dockerStats.items,
-    isFetching: state.dockerStats.isFetching,
+    filter: dockerStatsFilter,
+    items: dockerStatsList.items,
+    isFetching: dockerStatsList.isFetching,
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    initialize: (filter) => {
-      dispatch(getDockerStatsActionCreater(filter))
-    }
+    selectFilter: (event, index, value) => {
+      dispatch(filterContainer(value));
+      dispatch(getDockerStatsActionCreator(value));
+    },
+    initialize: () => {
+      dispatch(getDockerStatsActionCreator(DOCKER_STATS_FILTER_ALL));
+      ownProps.updateBreadcrumb({
+        name: 'Statistics',
+      })
+    },
   }
 }
 

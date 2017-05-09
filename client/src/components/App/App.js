@@ -90,8 +90,6 @@ class App extends Component {
       this.handleChangeWidth(sidebarOpen, LARGE);
     } else if ((this.props.width === MEDIUM || this.props.width === SMALL) && this.prevWidth !== MEDIUM) {
       this.handleChangeWidth(sidebarOpen, MEDIUM);
-      console.log(this.props.width)
-      console.log(MEDIUM)
       this.prevWidth = MEDIUM;
     }
 
